@@ -9,9 +9,10 @@ import getpass
 
 
 #Parameters
-facebookUsername = input("Username:")
-facebookPassword = getpass.getpass("Password:")
-facebookURLextension = input("URL extension:")
+#facebookUsername = input("Username:")
+#facebookPassword = getpass.getpass("Password:")
+#facebookURLextension = input("URL extension:")
+
 fullFacebookURL = "https://www.facebook.com/" + facebookURLextension
 
 
@@ -50,20 +51,30 @@ profilePage.click()
 photosPage = browser.find_element_by_xpath('//a[@href="'+fullFacebookURL+'/photos"]')
 photosPage.click()
 
-####Hardcoded for now, need to workout how to open first picture.
-firstPhoto = browser.find_element_by_xpath('//a[@href="https://www.facebook.com/photo.php?fbid=10100860349916511&set=t.733485463&type=3"]')
+firstPhoto = browser.find_element_by_xpath('//a[contains(@href, "/photo.php?fbid")]')
 firstPhoto.click()
 
 
 
-#Open Actions menu
-browser.implicitly_wait(100)
+#Stuck on this bit - opening aria menu not working.
 previousURL = browser.current_url
 
-browser.find_element_by_xpath('//a[contains(@href="https://scontent-lht6-1.xx.fbcdn.net")]').click()
+actionsMenu = browser.find_elements_by_css_selector("[aria-label='Actions for this post']")
 
+for menuItem in actionsMenu:
+    print(menuItem)
+
+#browser.execute_script("arguments[0].aria-expanded = 'true';", actionsMenu)
 
 #actions = ActionChains(browser)
 #actions.send_keys(Keys.TAB * 8)
 #actions.send_keys(Keys.RETURN)
 #actions.perform()
+
+
+#actionsMenu.click()
+
+#browser.find_element_by_xpath('//a[contains(@href="https://scontent-lht6-1.xx.fbcdn.net")]').click()
+
+
+
