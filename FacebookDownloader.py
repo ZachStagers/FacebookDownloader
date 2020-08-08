@@ -9,9 +9,9 @@ import getpass
 
 
 #Parameters
-#facebookUsername = input("Username:")
-#facebookPassword = getpass.getpass("Password:")
-#facebookURLextension = input("URL extension:")
+facebookUsername = input("Username:")
+facebookPassword = getpass.getpass("Password:")
+facebookURLextension = input("URL extension:")
 
 fullFacebookURL = "https://www.facebook.com/" + facebookURLextension
 
