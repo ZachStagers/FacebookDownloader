@@ -3,6 +3,10 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+
 import getpass
 
 
@@ -13,6 +17,7 @@ facebookUsername = input("Username:")
 facebookPassword = getpass.getpass("Password:")
 facebookURLextension = input("URL extension:")
 
+#Variables
 fullFacebookURL = "https://www.facebook.com/" + facebookURLextension
 
 
@@ -56,25 +61,11 @@ firstPhoto.click()
 
 
 
-#Stuck on this bit - opening aria menu not working.
+#Open "Actions for this post" menu and click Download.
 previousURL = browser.current_url
 
-actionsMenu = browser.find_elements_by_css_selector("[aria-label='Actions for this post']")
+actionsMenu = browser.find_element_by_xpath("//div[@class='btwxx1t3 j83agx80 hybvsw6c ll8tlv6m']//div[@class='nqmvxvec j83agx80 jnigpg78 cxgpxx05 dflh9lhu sj5x9vvc scb9dxdr odw8uiq3']//div[@aria-label='Actions for this post']")
+browser.execute_script("arguments[0].click()", actionsMenu)
 
-for menuItem in actionsMenu:
-    print(menuItem)
-
-#browser.execute_script("arguments[0].aria-expanded = 'true';", actionsMenu)
-
-#actions = ActionChains(browser)
-#actions.send_keys(Keys.TAB * 8)
-#actions.send_keys(Keys.RETURN)
-#actions.perform()
-
-
-#actionsMenu.click()
-
-#browser.find_element_by_xpath('//a[contains(@href="https://scontent-lht6-1.xx.fbcdn.net")]').click()
-
-
-
+download = browser.find_element_by_xpath('//a[contains(@href, "https://scontent-lht6-1.xx.fbcdn.net")]')
+download.click()
