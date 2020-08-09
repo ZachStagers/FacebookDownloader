@@ -6,9 +6,27 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-
 import getpass
+import time
 
+
+
+#Define Functions
+def downloadPhoto():
+    #Function to open actions menu and download the photo.
+    actionsMenu = browser.find_element_by_xpath("//div[@class='btwxx1t3 j83agx80 hybvsw6c ll8tlv6m']//div[@class='nqmvxvec j83agx80 jnigpg78 cxgpxx05 dflh9lhu sj5x9vvc scb9dxdr odw8uiq3']//div[@aria-label='Actions for this post']")
+    browser.execute_script("arguments[0].click()", actionsMenu)
+
+    download = browser.find_element_by_xpath('//a[contains(@class, "oajrlxb2 g5ia77u1 qu0x051f esr5mh6w e9989ue4 r7d6kgcz rq0escxv nhd2j8a9 j83agx80 p7hjln8o kvgmc6g5 oi9244e8 oygrvhab h676nmdw cxgpxx05 dflh9lhu sj5x9vvc scb9dxdr i1ao9s8h esuyzwwr f1sip0of lzcic4wl l9j0dhe7 abiwlrkh p8dawk7l bp9cbjyn dwo3fsh8 btwxx1t3 pfnyh3mw du4w35lb")]')
+    download.click()
+
+
+
+def navigateNextPhoto():
+    #Function to navigate to the next photo if there is one.
+    nextPhoto = browser.find_element_by_xpath("//div[@aria-label='Next photo']")
+    browser.execute_script("arguments[0].click()", nextPhoto)
+    time.sleep(2)
 
 
 
@@ -17,8 +35,11 @@ facebookUsername = input("Username:")
 facebookPassword = getpass.getpass("Password:")
 facebookURLextension = input("URL extension:")
 
+
+
 #Variables
 fullFacebookURL = "https://www.facebook.com/" + facebookURLextension
+lastPhoto = False
 
 
 
@@ -47,7 +68,7 @@ password.send_keys(facebookPassword + Keys.RETURN)
 
 
 
-#Go to your profile page, then photos page, then open the first photo.
+#Go to profile page, then photos page, then open the first photo.
 browser.implicitly_wait(5)
 
 profilePage = browser.find_element_by_xpath('//a[@href="'+fullFacebookURL+'"]')
@@ -61,11 +82,7 @@ firstPhoto.click()
 
 
 
-#Open "Actions for this post" menu and click Download.
-previousURL = browser.current_url
-
-actionsMenu = browser.find_element_by_xpath("//div[@class='btwxx1t3 j83agx80 hybvsw6c ll8tlv6m']//div[@class='nqmvxvec j83agx80 jnigpg78 cxgpxx05 dflh9lhu sj5x9vvc scb9dxdr odw8uiq3']//div[@aria-label='Actions for this post']")
-browser.execute_script("arguments[0].click()", actionsMenu)
-
-download = browser.find_element_by_xpath('//a[contains(@href, "https://scontent-lht6-1.xx.fbcdn.net")]')
-download.click()
+#Download photos!
+while(lastPhoto == False):
+    downloadPhoto()
+    navigateNextPhoto()
