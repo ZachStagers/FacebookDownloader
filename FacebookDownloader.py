@@ -1,10 +1,13 @@
+## Developed by Zach Stagers Aug 8th, 2020
+## Contact me on Twitter: @ZachStagers
+## https://github.com/ZachStagers/FacebookDownloader
+
+
+
 #Imports
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 import getpass
 import time
@@ -39,7 +42,6 @@ facebookURLextension = input("URL extension:")
 
 #Variables
 fullFacebookURL = "https://www.facebook.com/" + facebookURLextension
-lastPhoto = False
 
 
 
@@ -82,7 +84,14 @@ firstPhoto.click()
 
 
 
-#Download photos!
-while(lastPhoto == False):
+#Download photos - infinite loop until the next button stops appearing.
+while(1 == 1):
     downloadPhoto()
-    navigateNextPhoto()
+    if browser.find_elements_by_xpath("//div[@class='l9j0dhe7 dhix69tm sjgh65i0 wkznzc2l tr9rh885']//div[@aria-label='Next photo']"):
+        navigateNextPhoto()
+    else:
+        break
+
+
+
+print("Enjoy your pictures. Contact me on Twitter: @ZachStagers")
